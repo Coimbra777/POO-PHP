@@ -3,10 +3,12 @@
 class Caneta
 {
 
+  //Atributos
+  public $modelo;
   public $cor;
-  public $ponta;
-  public $carga;
-  public $tampada;
+  private $ponta;
+  protected $carga;
+  protected $tampada;
 
   public function rabiscar()
   {
@@ -17,12 +19,12 @@ class Caneta
     }
   }
 
-  public function tampar()
+  private function tampar()
   {
     $this->tampada = true;
   }
 
-  public function destampar()
+  private function destampar()
   {
     $this->tampada = false;
   }
