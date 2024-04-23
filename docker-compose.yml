@@ -1,0 +1,33 @@
+version: "2"
+
+services:
+  webserver:
+    image: php:7.4-apache
+    ports:
+      - "8080:80" # Mapeia a porta 8080 do host para a porta 80 do contêiner do servidor web
+    volumes:
+      - ./htdocs:/var/www/html
+      - ./apache.conf:/etc/apache2/sites-available/000-default.conf
+      - ./php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.5
+    volumes:
+      - ./database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306" # Mapeia a porta 3306 do host para a porta 3306 do contêiner do banco de dados
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "8181:80" # Mapeia a porta 8181 do host para a porta 80 do contêiner do phpMyAdmin
+    links:
+      - db
